@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشاهدة فيديوهات القنوات المختارة</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1><i class="fab fa-youtube"></i> مشاهدة القنوات المختارة</h1>
+                <p class="subtitle">شاهد أحدث فيديوهات قنواتك المفضلة في مكان واحد</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- API Key Setup -->
+    <div class="api-setup" id="apiSetup">
+        <div class="container">
+            <div class="setup-card">
+                <h2><i class="fas fa-key"></i> إعداد YouTube API Key</h2>
+                <p>لعرض الفيديوهات، يجب إدخال مفتاح API من YouTube</p>
+                <div class="setup-steps">
+                    <ol>
+                        <li>انتقل إلى <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a></li>
+                        <li>أنشئ مشروع جديد أو استخدم مشروعًا موجودًا</li>
+                        <li>فعّل YouTube Data API v3</li>
+                        <li>أنشئ مفتاح API واحفظه</li>
+                    </ol>
+                </div>
+                <div class="api-input-group">
+                    <input type="text" id="apiKeyInput" placeholder="أدخل YouTube API Key هنا..." class="api-input">
+                    <button onclick="saveApiKey()" class="btn-primary">
+                        <i class="fas fa-save"></i> حفظ وبدء العرض
+                    </button>
+                </div>
+                <p class="note"><i class="fas fa-info-circle"></i> سيتم حفظ المفتاح في المتصفح فقط ولن يتم إرساله لأي خادم</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent" style="display: none;">
+        <!-- Controls -->
+        <div class="controls">
+            <div class="container">
+                <div class="controls-row">
+                    <div class="filter-group">
+                        <label for="channelFilter"><i class="fas fa-filter"></i> تصفية حسب القناة:</label>
+                        <select id="channelFilter" onchange="filterByChannel()">
+                            <option value="all">جميع القنوات</option>
+                        </select>
+                    </div>
+                    <div class="search-group">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="searchInput" placeholder="ابحث في الفيديوهات..." onkeyup="searchVideos()">
+                    </div>
+                    <button onclick="resetApiKey()" class="btn-secondary">
+                        <i class="fas fa-key"></i> تغيير API Key
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>جاري تحميل الفيديوهات...</p>
+        </div>
+
+        <!-- Error Message -->
+        <div class="error-message" id="errorMessage" style="display: none;">
+            <div class="container">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p id="errorText"></p>
+            </div>
+        </div>
+
+        <!-- Videos Grid -->
+        <div class="container">
+            <div class="stats" id="stats">
+                <p><i class="fas fa-video"></i> عدد الفيديوهات: <span id="videoCount">0</span></p>
+            </div>
+            <div class="videos-grid" id="videosGrid">
+                <!-- Videos will be loaded here dynamically -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Video Player Modal -->
+    <div class="modal" id="videoModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeVideo()">&times;</span>
+            <div class="video-container" id="videoContainer">
+                <!-- YouTube player will be embedded here -->
+            </div>
+            <div class="video-info" id="videoInfo">
+                <!-- Video information will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 مشاهدة القنوات المختارة - جميع الحقوق محفوظة</p>
+            <p class="footer-note">هذا الموقع يستخدم YouTube API لعرض الفيديوهات</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
